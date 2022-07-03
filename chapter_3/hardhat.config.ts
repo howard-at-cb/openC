@@ -1,8 +1,12 @@
+require('dotenv').config()
+
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat"
 import "@nomiclabs/hardhat-ethers"
 
 import { HardhatUserConfig } from "hardhat/config"
+
+console.log("MAINNET_FORKING_URL", process.env.MAINNET_FORKING_URL)
 
 const config: HardhatUserConfig = {
     solidity: {
@@ -10,6 +14,13 @@ const config: HardhatUserConfig = {
     },
     typechain: {
         outDir: "typechain"
+    },
+    networks: {
+        hardhat: {
+            forking: {
+                url: process.env.MAINNET_FORKING_URL || ""
+            }
+        }
     }
 }
 
