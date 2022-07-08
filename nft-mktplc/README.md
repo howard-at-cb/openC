@@ -24,3 +24,14 @@ npm i --save-dev @types/mocha
 yarn add --dev @types/react
 yarn add --dev typescript
 ```
+
+for deployment 
+```shell
+npx hardhat node
+npx hardhat run scripts/001_deploy_nft_nftmktplc.ts --network localhost
+```
+
+for front end
+```shell
+npm run dev
+```
