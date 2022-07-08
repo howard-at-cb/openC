@@ -20,4 +20,7 @@ npm install --save-dev ts-node
 npm install dotenv -D
 npm install typechain@8.1.0 @typechain/hardhat @typechain/ethers-v5 -D 
 npm i --save-dev @types/mocha
+
+yarn add --dev @types/react
+yarn add --dev typescript
 ```
