@@ -8,7 +8,9 @@ import {
   nftaddress
 } from '../config'
 
-import NFTMarketplace from '../artifacts/contracts/NFTMarket.sol/NFTMarket.json' // contract ABI
+// import contract ABIs
+import NFTMarketplace from '../artifacts/contracts/NFTMarket.sol/NFTMarket.json'
+import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 
 export default function Home() {
   const [nfts, setNfts] = useState([])
@@ -21,16 +23,17 @@ export default function Home() {
   async function loadNFTs() {
     /* create a generic provider and query for unsold market items */
     const provider = new ethers.providers.JsonRpcProvider()
-    const contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, provider)
-    const data = await contract.fetchMarketItems() // maps to a contract function
+    const nftContract = new ethers.Contract(nftaddress, NFT.abi, provider)
+    const marketContract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, provider)
+    const data = await marketContract.fetchMarketItems() // correlates directly with a function in contract, returns an array
 
     /*
     *  map over items returned from smart contract and format 
     *  them as well as fetch their token metadata
     */
     const items = await Promise.all(data.map(async i => {
-      const tokenUri = await contract.tokenURI(i.tokenId)
-      const meta = await axios.get(tokenUri) // getting the image/video/music/etc. from storage (IPFS/S3/etc.)
+      const tokenUri = await nftContract.tokenURI(i.tokenId)
+      const meta = await axios.get(tokenUri) // getting the image/video/music/etc. from storage (endpoint for IPFS/S3/etc.)
 
       let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
       let item = {
@@ -53,6 +56,7 @@ export default function Home() {
     const web3Modal = new Web3Modal()
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)
+
     const signer = provider.getSigner()
     const contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer)
 
@@ -62,7 +66,7 @@ export default function Home() {
       value: price
     })
     await transaction.wait()
-    loadNFTs()
+    loadNFTs() // reload screen
   }
 
   if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
@@ -83,7 +87,7 @@ export default function Home() {
                 </div>
                 <div className="p-4 bg-black">
                   <p className="text-2xl font-bold text-white">{nft.price} ETH</p>
-                  <button className="mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded" onClick={() => buyNft(nft)}>Buy</button>
+                  <button className="w-full bg-pink-500 text-white font-bold py-2 px-12 rounded" onClick={() => buyNft(nft)}>Buy</button>
                 </div>
               </div>
             ))

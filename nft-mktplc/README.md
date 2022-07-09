@@ -33,5 +33,6 @@ npx hardhat run scripts/001_deploy_nft_nftmktplc.ts --network localhost
 
 for front end
 ```shell
+npm install --save-dev ipfs-http-client@50.1.2
 npm run dev
 ```
