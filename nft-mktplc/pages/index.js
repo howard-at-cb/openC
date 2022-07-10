@@ -20,9 +20,16 @@ export default function Home() {
     loadNFTs()
   }, [])
 
+  /* create a generic provider and query for unsold market items */
   async function loadNFTs() {
-    /* create a generic provider and query for unsold market items */
-    const provider = new ethers.providers.JsonRpcProvider()
+    /*
+      Polygon network doc 
+      https://docs.polygon.technology/docs/develop/network-details/network/
+    */
+    // const provider = new ethers.providers.JsonRpcProvider() // local setup
+    const provider = new ethers.providers.JsonRpcProvider("https://rpc-mumbai.matic.today") // mumbai testnet setup
+    //const provider = new ethers.providers.JsonRpcProvider("https://rpc-mumbai.matic.today") // polygon mainnet setup
+
     const nftContract = new ethers.Contract(nftaddress, NFT.abi, provider)
     const marketContract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, provider)
     const data = await marketContract.fetchMarketItems() // correlates directly with a function in contract, returns an array

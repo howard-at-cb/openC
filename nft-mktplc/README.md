@@ -14,6 +14,11 @@ node scripts/sample-script.js
 npx hardhat help
 ```
 
+to install dependencies 
+```shell
+yarn install
+```
+
 for typescript
 ```shell
 npm install --save-dev ts-node
@@ -36,3 +41,4 @@ for front end
 npm install --save-dev ipfs-http-client@50.1.2
 npm run dev
 ```
+https://dev.to/atharva3010/decentralised-web-apps-how-to-deploy-your-web-app-onto-ipfs-with-terminal-284p
