@@ -5,9 +5,9 @@ import "@nomiclabs/hardhat-waffle";
 import { HardhatUserConfig } from "hardhat/config"
 
 
-const projectId = "OS6oMuRKI5Ck38VFbtS3mz0JlBLvw8Pk1"
+const projectId = "OS6oMuRKI5Ck38VFbtS3mz0JlBLvw8Pk"
 
-//console.log("MUMBAI_MNEMONIC", process.env.MUMBAI_MNEMONIC)
+//console.log("MNEMONIC", process.env.MNEMONIC)
 
 const config: HardhatUserConfig = {
   networks: {
@@ -17,7 +17,13 @@ const config: HardhatUserConfig = {
     mumbai: {
       url: `https://polygon-mumbai.g.alchemy.com/v2/${projectId}`,
       accounts: {
-        mnemonic: process.env.MUMBAI_MNEMONIC || ""
+        mnemonic: process.env.MNEMONIC || ""
+      }
+    },
+    mainnet: {
+      url: `https://polygon-mainnet.g.alchemy.com/v2/-Iw3tYsz9Nk42sdiklRF3rvEjl49n1JB`,
+      accounts: {
+        mnemonic: process.env.MNEMONIC || ""
       }
     }
   },
