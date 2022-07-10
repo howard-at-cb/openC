@@ -79,7 +79,7 @@ contract NFTMarket is ReentrancyGuard {
         uint price = idToMarketItem[itemId].price;
         uint tokenId = idToMarketItem[itemId].tokenId;
 
-        // what about gas fee in msg.value ? 
+        // gas fee is not part of msg.value, but it is required for a tx to go through 
         require(msg.value == price, "please submit the asking price in order to complete the purchase");
 
         idToMarketItem[itemId].seller.transfer(msg.value);
